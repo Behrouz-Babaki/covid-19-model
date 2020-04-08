@@ -1,3 +1,10 @@
+#Minimal working example
+import pickle
+import numpy as np
+import matplotlib.pyplot as plt
+
+transmission_prob=.25
+
 # data simulated a week ago
 r = pickle.load(open('simdata.pkl','rb'))
 sr = sorted(r, key=lambda x: x['time'])
