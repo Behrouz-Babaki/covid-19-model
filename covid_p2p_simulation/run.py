@@ -184,6 +184,16 @@ def run_simu(n_stores=None, n_people=None, n_parks=None, n_misc=None,
     city = City(stores=stores, parks=parks, humans=humans, miscs=miscs)
     monitors = [EventMonitor(f=120), SEIRMonitor(f=1440)]
 
+    extra_info = {}
+    extra_info['init_percent_sick'] = init_percent_sick
+    extra_info['initial_states'] = ['infected' if i < n_people * init_percent_sick 
+                                               else 'not_infected' 
+                                    for i in range(n_people)]
+    extra_info['recovery_probs'] = [1.0 / h.recovery_days for h in humans]
+    import json
+    with open('extra_info.json', 'w') as f:
+        json.dump(extra_info, f)
+
     # run the simulation
     if print_progress:
         monitors.append(TimeMonitor(60))
